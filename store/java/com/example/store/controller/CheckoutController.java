@@ -1,0 +1,40 @@
+package com.example.store.controller;
+
+import com.example.store.dtos.CheckoutRequest;
+import com.example.store.dtos.CheckoutResponse;
+import com.example.store.dtos.ErrorDto;
+import com.example.store.entities.Order;
+import com.example.store.entities.OrderItem;
+import com.example.store.entities.OrderStatus;
+import com.example.store.exceptions.CartNotFoundException;
+import com.example.store.repositories.CartRepository;
+import com.example.store.repositories.OrderRepository;
+import com.example.store.services.AuthService;
+import com.example.store.services.CartService;
+import com.example.store.services.CheckoutService;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/checkout")
+@AllArgsConstructor
+public class CheckoutController {
+    private final CheckoutService checkoutService;
+    @PostMapping
+    public CheckoutResponse checkout(
+            @Valid @RequestBody CheckoutRequest request
+            ){
+
+        return checkoutService.checkout(request);
+    }
+
+//    @ExceptionHandler({CartNotFoundException.class, RuntimeException.class})
+//    public ResponseEntity<ErrorDto> handleException(Exception ex){
+//        return ResponseEntity.badRequest().body(new ErrorDto(ex.getMessage()));
+//    }
+}
